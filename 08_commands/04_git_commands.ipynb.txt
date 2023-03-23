@@ -1,0 +1,56 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "cdacfd4b",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "sudo su -\n",
+    "ifconfig\n",
+    "\n",
+    "--------------------------------------------git pull \n",
+    "cd /home/centos/JDCV/JDCV/\n",
+    "git branch\n",
+    "git pull origin python_cvdb\n",
+    "   or\n",
+    "git pull origin python_cvdb:python_cvdb(if branch not found)\n",
+    "\n",
+    "##### git stash \n",
+    "\n",
+    "----------------------------------\n",
+    "--------git push\n",
+    "git diff\n",
+    "git status\n",
+    "git branch\n",
+    "\n",
+    "cd   /home/ubuntu/JDCV/JDCV\n",
+    "git add *\n",
+    "git commit -m 'msg'\n",
+    "git push"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "sourav_venv",
+   "language": "python",
+   "name": "sourav_venv"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.7"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
