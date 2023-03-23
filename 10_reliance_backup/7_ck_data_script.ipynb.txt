@@ -1,0 +1,133 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "Using TensorFlow backend.\n"
+     ]
+    }
+   ],
+   "source": [
+    "import cv2\n",
+    "import sys\n",
+    "import shutil\n",
+    "import os\n",
+    "import time\n",
+    "import numpy as np\n",
+    "import pandas as pd\n",
+    "import seaborn as sns\n",
+    "import matplotlib.pyplot as plt\n",
+    "import tensorflow as tf\n",
+    "import multiprocessing as mp\n",
+    "import face_recognition\n",
+    "from cvloop import cvloop\n",
+    "import multiprocessing as mp\n",
+    "import zipfile\n",
+    "\n",
+    "from keras.models import load_model\n",
+    "from keras.preprocessing.image import load_img,img_to_array\n",
+    "\n",
+    "from sklearn.discriminant_analysis import LinearDiscriminantAnalysis"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 47,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with zipfile.ZipFile('/home/ubuntu/videos/cohn-kanade-images.zip', 'r') as zip_ref:\n",
+    "    zip_ref.extractall('/home/ubuntu/videos/ck_images')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 48,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dataset_path='/home/ubuntu/videos/ck_images/cohn-kanade-images/'\n",
+    "label_path='/home/ubuntu/videos/ck_labels/Emotion/'\n",
+    "base_target_path='/home/ubuntu/videos/ck_data_as_per_labels/'\n",
+    "label_dir_paths=[label_path +x for x in os.listdir(label_path)]\n",
+    "label_subdir_paths=[label_dir_paths[i]+'/'+x for i,subdir in enumerate(label_dir_paths) for x in os.listdir(subdir)]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 43,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def copy_pos_data(source_path,target_path):\n",
+    "    files = os.listdir(source_path)\n",
+    "    a=len(files)//5\n",
+    "    files.sort()\n",
+    "    \n",
+    "    for x in files[-a:]:\n",
+    "        shutil.copy(source_path+'/'+x,target_path)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 44,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "for x in label_subdir_paths:\n",
+    "    for y in os.listdir(x):\n",
+    "        if y[-4:]=='.txt':\n",
+    "            f=open(x+'/'+y, \"r\")\n",
+    "            temp=x.split('/')[-2:]\n",
+    "            source_path=dataset_path+temp[-2]+'/'+temp[-1]\n",
+    "            target_path=base_target_path+str(int(float(f.read())))\n",
+    "            copy_pos_data(source_path,target_path)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 45,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "188  38  150  100  242  98  228  "
+     ]
+    }
+   ],
+   "source": [
+    "for i in range(1,8):\n",
+    "    print(len(os.listdir(base_target_path+'/'+str(i))),end=\"  \")"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "video_env",
+   "language": "python",
+   "name": "video_env"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
